@@ -1,7 +1,5 @@
 (() => {
-  const BASE_URL =
-    window.LOVEIFY_API_URL ||
-    `${window.location.protocol}//${window.location.hostname}:5000`;
+  const BASE_URL = "https://love-story-mrnz.onrender.com";
   const MUSIC_JSON_PATH = "./assets/music/music.json";
   const DEFAULT_COVER = "./assets/images/avatar.jpg";
   const tokenKey = "love_token";
