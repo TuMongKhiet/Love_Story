@@ -1889,7 +1889,7 @@ const musicPlaylist = [
   "./assets/music/Shayne Ward - Until You (Audio).mp3",
   "./assets/music/Taylor Swift - Enchanted (Taylor's Version) (Lyric Video).mp3",
   "./assets/music/Taylor Swift - Love Story (Lyrics).mp3",
-  "./assets/music/vietsub + lyrics  𝑶𝒏𝒍𝒚 𝑳𝒐𝒗𝒆  Trademark  七元 (Thất Nguyên) Cover.mp3",
+  "./assets/music/Only love.mp3",
   "./assets/music/Vạn Vật Như Muốn Ta Bên Nhau - RIO  Lyrics Video.mp3",
   "./assets/music/Vợ Yêu.mp3",
   "./assets/music/Westlife - My Love (Lyrics).mp3",
