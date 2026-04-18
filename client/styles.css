@@ -2104,3 +2104,69 @@ textarea:focus,
     height: 24px;
   }
 }
+/* Fix input bị lệch/tràn trên mobile iPhone */
+.form-grid > *,
+.button-row > *,
+.timeline-card > * {
+  min-width: 0;
+}
+
+#memoryDate,
+#memoryImage,
+.timeline-date-input,
+.timeline-input,
+input[type="date"],
+input[type="file"] {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+}
+
+#memoryImage,
+input[type="file"] {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 14px 15px;
+  background: rgba(255, 251, 252, 0.96);
+  border: 1px solid var(--line-soft);
+  border-radius: 14px;
+}
+
+input[type="date"],
+.timeline-date-input {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 56px;
+}
+
+@media (max-width: 640px) {
+  .form-card,
+  .timeline-card {
+    overflow: hidden;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #memoryDate,
+  #memoryImage,
+  input[type="date"],
+  input[type="file"],
+  .timeline-date-input,
+  .timeline-input,
+  textarea,
+  .preview-box {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+#loginForm {
+  display: grid;
+  gap: 16px;
+}
+
+#loginForm .form-grid {
+  gap: 16px;
+}
