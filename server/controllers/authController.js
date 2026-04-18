@@ -28,8 +28,7 @@ const login = async (req, res) => {
 
     if (!editorUsername || !editorPassword || !jwtSecret) {
       return res.status(500).json({
-        message:
-          "Thieu cau hinh dang nhap hoac JWT_SECRET trong bien moi truong.",
+        message: "Thieu cau hinh dang nhap hoac JWT_SECRET trong bien moi truong.",
       });
     }
 
@@ -50,11 +49,7 @@ const login = async (req, res) => {
     let user = await User.findOne({ username: editorUsername });
 
     if (!user) {
-      const hashedPassword = await bcrypt.hash(
-        `${editorPassword}|${jwtSecret}`,
-        10,
-      );
-
+      const hashedPassword = await bcrypt.hash(`${editorPassword}|${jwtSecret}`, 10);
       user = await User.create({
         username: editorUsername,
         password: hashedPassword,
@@ -84,7 +79,35 @@ const login = async (req, res) => {
   }
 };
 
+const me = async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(200).json({ loggedIn: false, user: null });
+    }
+
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    return res.status(200).json({
+      loggedIn: true,
+      user: {
+        id: decoded.id,
+        username: decoded.username,
+        role: decoded.role,
+      },
+    });
+  } catch (error) {
+    return res.status(401).json({
+      loggedIn: false,
+      user: null,
+      message: "Token không hợp lệ.",
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
+  me,
 };

@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
+const fs = require("fs");
 const connectDB = require("./config/db");
 
 dotenv.config();
@@ -13,17 +14,15 @@ const allowedOrigins = [
   process.env.CLIENT_URL,
   "http://127.0.0.1:5500",
   "http://localhost:5500",
+  "http://127.0.0.1:5173",
+  "http://localhost:5173",
 ].filter(Boolean);
 
 app.use(
   cors({
     origin(origin, callback) {
       if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
+      if (allowedOrigins.includes(origin)) return callback(null, true);
       return callback(new Error("CORS blocked for this origin."));
     },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -31,32 +30,36 @@ app.use(
   }),
 );
 
-app.use(express.json({ limit: "2mb" }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "8mb" }));
+app.use(express.urlencoded({ extended: true, limit: "8mb" }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => {
-  res.status(200).send("Love Website V2 API is running...");
+  res.status(200).send("Love Website API is running...");
 });
 
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/profile", require("./routes/profileRoutes"));
-app.use("/api/memories", require("./routes/memoryRoutes"));
-app.use("/api/timeline", require("./routes/timelineRoutes"));
-app.use("/api/comments", require("./routes/commentRoutes"));
+function safeMount(routePath, mountPath) {
+  const absoluteRoutePath = path.join(__dirname, routePath);
+  if (!fs.existsSync(`${absoluteRoutePath}.js`) && !fs.existsSync(absoluteRoutePath)) {
+    console.warn(`Skip missing route: ${routePath}`);
+    return;
+  }
+  app.use(mountPath, require(routePath));
+}
 
-// Khong mount passwordRoutes vi login dang duoc quan ly bang bien moi truong.
-// Neu ban mount route reset password cu, no vua khong an toan vua khong doi duoc mat khau dang nhap that.
+safeMount("./routes/authRoutes", "/api/auth");
+safeMount("./routes/profileRoutes", "/api/profile");
+safeMount("./routes/playlistRoutes", "/api/playlists");
+safeMount("./routes/memoryRoutes", "/api/memories");
+safeMount("./routes/timelineRoutes", "/api/timeline");
+safeMount("./routes/commentRoutes", "/api/comments");
 
 app.use((req, res) => {
-  res.status(404).json({
-    message: "Route not found.",
-  });
+  res.status(404).json({ message: "Route not found." });
 });
 
 app.use((err, req, res, next) => {
   console.error("SERVER ERROR:", err);
-
   res.status(err.status || 500).json({
     message: err.message || "Loi server.",
     error: err.name || "UnknownError",

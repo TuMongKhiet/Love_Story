@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luvify</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./spotify.css" />
+  </head>
+  <body>
+    <div class="library-mode-page">
+      <aside class="library-sidebar">
+        <div class="library-sidebar__top">
+          <button id="backBtn" class="back-btn">← Quay lại</button>
+          <button
+            id="createPlaylistBtn"
+            class="icon-circle editor-only"
+            title="Tạo playlist"
+          >
+            ＋
+          </button>
+        </div>
+
+        <div class="library-sidebar__header">
+          <h2>Your Library</h2>
+          <p>Playlist của bạn</p>
+        </div>
+
+        <div class="library-filters">
+          <button class="chip is-active" data-filter="all">Playlists</button>
+          <button class="chip" data-filter="favorites">Favorites</button>
+        </div>
+
+        <div class="library-search-row">
+          <input
+            id="playlistSearchInput"
+            class="search-input"
+            placeholder="Tìm playlist..."
+            autocomplete="off"
+          />
+          <span class="muted-label">Recent</span>
+        </div>
+
+        <div id="playlistList" class="playlist-list"></div>
+      </aside>
+
+      <main class="library-main">
+        <header class="top-searchbar">
+          <div class="home-pill">⌂</div>
+
+          <div class="searchbar-shell" id="topSearchShell">
+            <span class="topbar-icon">⌕</span>
+            <input
+              id="globalTrackSearchInput"
+              class="top-search-input"
+              placeholder="Tìm bài hát, nghệ sĩ hoặc album"
+              autocomplete="off"
+            />
+            <span class="topbar-shortcut">/</span>
+
+            <div id="searchSuggest" class="search-suggest hidden"></div>
+          </div>
+
+          <div class="top-searchbar__actions">
+            <div id="userBadge" class="user-badge">Guest • listener</div>
+            <button id="loginBtn" class="premium-btn">Đăng nhập</button>
+            <button id="logoutBtn" class="subtle-btn hidden">Đăng xuất</button>
+          </div>
+        </header>
+
+        <section id="playlistHero" class="playlist-hero">
+          <div id="playlistHeroCover" class="playlist-hero__cover">♪</div>
+
+          <div class="playlist-hero__content">
+            <p class="eyebrow">Public Playlist</p>
+            <h1
+              id="playlistHeroTitle"
+              class="playlist-hero__title"
+              title="Bấm để chỉnh sửa"
+            >
+              My Playlist #1
+            </h1>
+            <p id="playlistHeroMeta" class="playlist-hero__meta">
+              0 songs • No description yet
+            </p>
+            <div class="playlist-hero__owner">
+              <span>♥</span>
+              <strong>Luvify</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="playlist-toolbar">
+          <button id="playSelectedBtn" class="play-main-btn">▶</button>
+
+          <button
+            id="favoritePlaylistBtn"
+            class="toolbar-btn editor-only"
+            title="Yêu thích"
+          >
+            ♡
+          </button>
+
+          <button
+            id="openEditBtn"
+            class="toolbar-btn editor-only"
+            title="Chỉnh sửa"
+          >
+            ✎
+          </button>
+
+          <button
+            id="changeImageBtn"
+            class="toolbar-btn editor-only"
+            title="Đổi ảnh"
+          >
+            🖼
+          </button>
+
+          <button
+            id="deletePlaylistBtn"
+            class="toolbar-btn editor-only"
+            title="Xóa playlist"
+          >
+            🗑
+          </button>
+
+          <input id="heroImageInput" type="file" accept="image/*" hidden />
+        </section>
+
+        <section class="playlist-tracks-section">
+          <div id="playlistTracks" class="playlist-tracks"></div>
+        </section>
+
+        <section class="finder-section">
+          <div class="finder-section__top">
+            <div>
+              <h3>Kho nhạc</h3>
+              <p id="finderHint">
+                Tất cả bài sẽ hiện ở đây bạn tìm kiếm và thêm vào playlist.
+              </p>
+            </div>
+
+            <button
+              id="clearFinderBtn"
+              class="finder-close"
+              title="Xóa tìm kiếm"
+            >
+              ×
+            </button>
+          </div>
+
+          <div class="finder-search-wrap">
+            <input
+              id="finderInput"
+              class="finder-input"
+              placeholder="Tìm theo tên bài hát, hoặc ca sĩ"
+              autocomplete="off"
+            />
+            <div id="finderCount" class="finder-count">0 bài hát</div>
+          </div>
+
+          <div id="finderResults" class="finder-results"></div>
+        </section>
+      </main>
+
+      <aside class="now-panel">
+        <p class="eyebrow">Now Playing</p>
+        <img
+          id="nowCover"
+          class="now-cover"
+          src="./assets/images/avatar.jpg"
+          alt="cover"
+        />
+        <h3 id="nowTitle">Song not selected yet</h3>
+        <p id="nowArtist">Loveify local music</p>
+      </aside>
+    </div>
+
+    <footer class="playerbar">
+      <div class="playerbar__song">
+        <img id="miniCover" src="./assets/images/avatar.jpg" alt="mini cover" />
+        <div>
+          <strong id="miniTitle">Song not selected yet</strong>
+          <p id="miniArtist">Loveify local music</p>
+        </div>
+      </div>
+
+      <div class="playerbar__center">
+        <div class="playerbar__controls">
+          <button id="prevBtn" class="playerbar__btn">⏮</button>
+          <button id="playBtn" class="playerbar__play">▶</button>
+          <button id="nextBtn" class="playerbar__btn">⏭</button>
+        </div>
+
+        <div class="playerbar__timeline">
+          <span id="currentTimeLabel" class="time-label">0:00</span>
+          <input
+            id="progressInput"
+            class="progress-input"
+            type="range"
+            min="0"
+            max="100"
+            step="0.1"
+            value="0"
+          />
+          <span id="durationLabel" class="time-label">0:00</span>
+        </div>
+
+        <audio id="audioPlayer"></audio>
+      </div>
+
+      <div class="playerbar__extra">
+        <label class="speed-control">
+          <span>Tốc độ</span>
+          <select id="speedSelect">
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+          </select>
+        </label>
+
+        <input
+          id="volumeInput"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.7"
+        />
+      </div>
+    </footer>
+
+    <div id="editModal" class="modal hidden">
+      <div class="modal-overlay" data-close-modal></div>
+
+      <div class="modal-card">
+        <button class="modal-close" data-close-modal>×</button>
+        <h3>Edit details</h3>
+
+        <div class="modal-grid">
+          <label class="modal-cover-box">
+            <input id="modalImageInput" type="file" accept="image/*" hidden />
+            <div id="modalCoverPreview" class="modal-cover-preview">♪</div>
+          </label>
+
+          <div class="modal-fields">
+            <input
+              id="modalNameInput"
+              class="modal-input"
+              placeholder="Playlist name"
+            />
+            <textarea
+              id="modalDescriptionInput"
+              class="modal-textarea"
+              placeholder="Add an optional description"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <p>
+            Chỉ tài khoản editor đang đăng nhập từ trang chủ mới lưu được thay
+            đổi.
+          </p>
+          <button id="saveModalBtn" class="save-btn">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="loginModal" class="modal hidden">
+      <div class="modal-overlay" data-close-login></div>
+
+      <div class="modal-card small-modal">
+        <button class="modal-close" data-close-login>×</button>
+        <h3>Đăng nhập</h3>
+
+        <div class="modal-fields">
+          <input
+            id="loginUsername"
+            class="modal-input"
+            placeholder="Username"
+            autocomplete="username"
+          />
+          <input
+            id="loginPassword"
+            class="modal-input"
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password"
+          />
+        </div>
+
+        <div class="modal-footer single-action">
+          <p>
+            Dùng cùng tài khoản với trang chủ. Chỉ editor mới tạo / sửa / xóa
+            playlist.
+          </p>
+          <button id="submitLoginBtn" class="save-btn">Login</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./spotify.js"></script>
+  </body>
+</html>

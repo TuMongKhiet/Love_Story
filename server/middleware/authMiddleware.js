@@ -18,4 +18,13 @@ const protect = (req, res, next) => {
   }
 };
 
+protect.requireAdmin = (req, res, next) => {
+  if (!req.user || (req.user.role !== "admin" && req.user.role !== "editor")) {
+    return res.status(403).json({
+      message: "Chỉ tài khoản editor mới có quyền chỉnh sửa thư viện.",
+    });
+  }
+  next();
+};
+
 module.exports = protect;
