@@ -7,7 +7,30 @@ const $ = (id) => document.getElementById(id);
 /* =========================
    HELPERS
 ========================= */
+const navToggle = document.getElementById("navToggle");
+const navbar = document.querySelector(".navbar");
+const navLinks = document.querySelectorAll(".nav-links a");
 
+if (navToggle && navbar) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = navbar.classList.toggle("menu-open");
+    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  });
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      navbar.classList.remove("menu-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 820) {
+      navbar.classList.remove("menu-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    }
+  });
+}
 function showMessage(element, text) {
   if (!element) {
     console.warn(text);
@@ -251,7 +274,7 @@ let memoryCache = [];
 const commentsCache = {};
 let currentSlideIndex = 0;
 let slideInterval = null;
-let memoryViewMode = "cards";
+let memoryViewMode = "titles";
 
 let timelineCache = [];
 let timelineMode = readTimelineMode();

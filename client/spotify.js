@@ -82,7 +82,21 @@
     activeSuggestIndex: -1,
     currentSuggestions: [],
   };
+  const spotifyHomeBtn = document.getElementById("spotifyHomeBtn");
 
+  if (spotifyHomeBtn) {
+    spotifyHomeBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const path = window.location.pathname.toLowerCase();
+
+      if (path.endsWith("/spotify.html") || path.endsWith("spotify.html")) {
+        window.location.reload();
+      } else {
+        window.location.href = "./spotify.html";
+      }
+    });
+  }
   function paintRangeProgress(input) {
     if (!input) return;
     const min = Number(input.min || 0);

@@ -20,18 +20,33 @@
           <a href="./index.html">Nhat & Binh</a>
         </div>
 
-        <nav class="nav-links" aria-label="Primary">
-          <a href="#hero">Home</a>
-          <a href="#counter">Counter</a>
-          <a href="#about">About Us</a>
-          <a href="#gallery">Moments</a>
-          <a href="#timeline">Timeline</a>
-          <a href="#vault">Love Vault</a>
-        </nav>
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
-        <div class="nav-actions">
-          <button class="btn btn-secondary" id="openAuthBtn">Log in</button>
-          <button class="btn btn-primary" id="logoutBtn">Log out</button>
+        <div class="nav-panel" id="mobileNav">
+          <nav class="nav-links" aria-label="Primary">
+            <a href="#hero">Home</a>
+            <a href="#counter">Counter</a>
+            <a href="#about">About Us</a>
+            <a href="#gallery">Moments</a>
+            <a href="#timeline">Timeline</a>
+            <a href="#vault">Love Vault</a>
+          </nav>
+
+          <div class="nav-actions">
+            <button class="btn btn-secondary" id="openAuthBtn">Log in</button>
+            <button class="btn btn-primary" id="logoutBtn">Log out</button>
+          </div>
         </div>
       </div>
     </header>
